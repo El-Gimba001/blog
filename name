@@ -1,0 +1,1 @@
+"\nTesting role methods for user: " . $testUser- . "\n";

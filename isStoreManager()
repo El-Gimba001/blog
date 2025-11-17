@@ -1,0 +1,1 @@
+"isStoreManager: " . ($testUser- ? 'true' : 'false') . "\n";

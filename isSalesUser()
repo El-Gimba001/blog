@@ -1,0 +1,1 @@
+"isSalesUser: " . ($testUser- ? 'true' : 'false') . "\n";
