@@ -27,7 +27,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 text-sm">Total Sales</p>
-                    <p class="text-2xl font-bold text-gray-900">₦{{ number_format($totalSales, 2) }}</p>
+                    <p class="text-2xl font-bold text-gray-900">₦{{ number_format($dailyTotal, 2) }}</p>
                 </div>
                 <i data-lucide="dollar-sign" class="w-8 h-8 text-emerald-600"></i>
             </div>
@@ -57,7 +57,8 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 text-sm">Items Sold</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $totalItems }}</p>
+                    <p class="text-2xl font-bold text-gray-900">  </p>
+
                 </div>
                 <i data-lucide="package" class="w-8 h-8 text-orange-600"></i>
             </div>
@@ -101,7 +102,7 @@
                                 <span class="font-semibold text-gray-900">₦{{ number_format($transaction->total_amount, 2) }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="font-semibold text-green-600">₦{{ number_format($transaction->items->sum('profit'), 2) }}</span>
+                                <span class="font-semibold text-green-600">₦{{ number_format($transaction->transactionItems->sum('profit'), 2) }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $transaction->created_at->format('h:i A') }}

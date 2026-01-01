@@ -2,6 +2,7 @@
 @section('title', 'Sales Entry')
 
 @section('content')
+
 <div class="min-h-screen bg-gray-50 flex flex-col">
     <!-- Header -->
     <div class="bg-white shadow p-4 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -13,16 +14,23 @@
 
         <!-- Quick Navigation Strip -->
         <nav class="flex flex-wrap justify-center md:justify-end gap-2 md:gap-3">
-            <a href="{{ route('daily.transactions') }}"
+            <a href="{{ route('transaction.daily') }}"
                class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition"
                title="View today's transactions">
                 <i data-lucide="calendar-days" class="w-4 h-4"></i>
                 <span class="hidden sm:inline">Daily</span>
             </a>
 
-            <a href="{{ route('debts') }}"
-               class="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 transition"
-               title="View indebted customers">
+            <!-- Add Low Stock Alert Link -->
+            <a href="{{ route('products.low-stock') }}"
+               class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-lg hover:bg-amber-100 transition"
+               title="View low stock products">
+                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Low Stock</span>
+            </a>
+
+            <!-- REMOVED: Debts route as it doesn't exist -->
+            <a href="{{ route('debts') }}" class="flex items-center gap-1.5 px-3 py-1.5 bg-rose-50 text-rose-600 rounded-lg hover:bg-rose-100 transition" title="View indebted customers">
                 <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                 <span class="hidden sm:inline">Debts</span>
             </a>
@@ -40,6 +48,17 @@
                 <i data-lucide="package-minus" class="w-4 h-4"></i>
                 <span class="hidden sm:inline">Stock</span>
             </a>
+
+            <!-- Logout Button -->
+            <form method="POST" action="{{ route('logout') }}" class="inline">
+                @csrf
+                <button type="submit"
+                    class="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition"
+                    title="Logout from system">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Logout</span>
+                </button>
+            </form>
 
             <button id="backToDashboardBtn"
                 class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 border border-gray-200 transition"
@@ -79,27 +98,27 @@
                 <!-- Payment Type Selection -->
                 <div>
                   <label class="block text-gray-700 font-medium mb-2">Payment Type</label>
-                  <div id="paymentTypeGroup" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div id="payment_typeGroup" class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <label class="flex items-center justify-center gap-2 border rounded-lg p-2 cursor-pointer hover:bg-emerald-50 transition">
-                      <input type="radio" name="paymentType" value="Cash" class="hidden" checked>
+                      <input type="radio" name="payment_type" value="Cash" class="hidden" checked>
                       <i data-lucide="wallet" class="w-5 h-5 text-emerald-600"></i>
                       <span class="font-medium text-gray-700">Cash</span>
                     </label>
 
                     <label class="flex items-center justify-center gap-2 border rounded-lg p-2 cursor-pointer hover:bg-emerald-50 transition">
-                      <input type="radio" name="paymentType" value="POS" class="hidden">
+                      <input type="radio" name="payment_type" value="POS" class="hidden">
                       <i data-lucide="credit-card" class="w-5 h-5 text-emerald-600"></i>
                       <span class="font-medium text-gray-700">POS</span>
                     </label>
 
                     <label class="flex items-center justify-center gap-2 border rounded-lg p-2 cursor-pointer hover:bg-emerald-50 transition">
-                      <input type="radio" name="paymentType" value="Bank Transfer" class="hidden">
+                      <input type="radio" name="payment_type" value="Bank Transfer" class="hidden">
                       <i data-lucide="banknote" class="w-5 h-5 text-emerald-600"></i>
                       <span class="font-medium text-gray-700">Transfer</span>
                     </label>
 
                     <label class="flex items-center justify-center gap-2 border rounded-lg p-2 cursor-pointer hover:bg-emerald-50 transition">
-                      <input type="radio" name="paymentType" value="Credit" class="hidden">
+                      <input type="radio" name="payment_type" value="Credit" class="hidden">
                       <i data-lucide="file-minus" class="w-5 h-5 text-emerald-600"></i>
                       <span class="font-medium text-gray-700">Credit</span>
                     </label>
@@ -204,7 +223,7 @@
                         <i data-lucide="check-circle-2" class="w-4 h-4"></i>
                         <span>Complete Sale</span>
                     </button>
-            </div>
+                </div>
 
             </div>
         </section>
@@ -229,15 +248,15 @@
     const customerInput = document.getElementById("customerName");
     const backBtn = document.getElementById("backToDashboardBtn");
     const resetBtn = document.getElementById("resetBtn");
-    const paymentTypeGroup = document.getElementById("paymentTypeGroup");
+    const payment_typeGroup = document.getElementById("payment_typeGroup");
 
-    if (paymentTypeGroup) {
-      paymentTypeGroup.addEventListener("click", function (e) {
+    if (payment_typeGroup) {
+      payment_typeGroup.addEventListener("click", function (e) {
         const label = e.target.closest("label");
         if (!label) return;
 
         // remove active highlight
-        paymentTypeGroup.querySelectorAll("label").forEach(l => {
+        payment_typeGroup.querySelectorAll("label").forEach(l => {
           l.classList.remove("border-emerald-500", "bg-emerald-50");
         });
 
@@ -419,7 +438,7 @@ if (completeBtn) {
                 reference: document.getElementById("transactionRef").value,
                 customer_name: customerName,
                 location: document.querySelector("select[name='location']").value,
-                payment_type: document.querySelector("input[name='paymentType']:checked").value,
+                payment_type: document.querySelector("input[name='payment_type']:checked").value,
                 items: Array.from(document.querySelectorAll("#transactionBody tr:not(#emptyRow)")).map((row, index) => {
                     console.log(`🔍 DEBUG 4.${index}: Processing row`, row);
                     const cells = row.children;

@@ -55,14 +55,15 @@ class Emporia extends Model
     {
         return $this->hasMany(StockAdjustment::class);
     }
-}
 
-class Emporia extends Model
-{
-    use HasFactory;
-    
-    // ADD THIS LINE - explicitly set table name
-    protected $table = 'emporia';
-    
-    // ... rest of your code
+    // ADD THIS METHOD for manager reports
+    public function managerReports()
+    {
+        return $this->hasMany(ManagerReport::class);
+    }
+
+    public function auditor()
+    {
+        return $this->belongsTo(User::class, 'auditor_id');
+    }
 }

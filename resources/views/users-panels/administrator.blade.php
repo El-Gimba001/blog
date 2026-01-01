@@ -69,7 +69,7 @@
                 <i data-lucide="package" class="w-5 h-5"></i>
                 <span>Products</span>
             </a>
-            <a href="{{ route('daily.transactions') }}" class="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded-lg transition group">
+            <a href="{{ route('transaction.daily') }}" class="flex items-center gap-3 px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded-lg transition group">
                 <i data-lucide="receipt" class="w-5 h-5"></i>
                 <span>Transactions</span>
             </a>
@@ -174,7 +174,7 @@
                                 </div>
                                 <i data-lucide="receipt" class="w-8 h-8 text-purple-600"></i>
                             </div>
-                            <a href="{{ route('daily.transactions') }}" class="text-purple-600 text-sm hover:underline mt-2 block">
+                            <a href="{{ route('transaction.daily') }}" class="text-purple-600 text-sm hover:underline mt-2 block">
                                 View Transactions →
                             </a>
                         </div>
@@ -214,7 +214,7 @@
                             </a>
                             
                             <!-- Audit Logs -->
-                            <a href="#" class="bg-white p-4 rounded-lg shadow text-center hover:shadow-md transition border-2 border-transparent hover:border-purple-500">
+                            <a href=" # " class="bg-white p-4 rounded-lg shadow text-center hover:shadow-md transition border-2 border-transparent hover:border-purple-500">
                                 <i data-lucide="file-text" class="w-8 h-8 text-purple-600 mx-auto mb-2"></i>
                                 <span class="font-medium text-gray-700">Audit Logs</span>
                                 <p class="text-xs text-gray-500 mt-1">System activity logs</p>
@@ -233,7 +233,7 @@
                     <div>
                         <h2 class="text-xl font-semibold text-gray-800 mb-4">Quick Reports</h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <a href="{{ route('daily.transactions') }}" class="bg-white p-4 rounded-lg shadow hover:shadow-md transition border-l-4 border-blue-500">
+                            <a href="{{ route('transaction.daily') }}" class="bg-white p-4 rounded-lg shadow hover:shadow-md transition border-l-4 border-blue-500">
                                 <div class="flex items-center gap-3">
                                     <i data-lucide="bar-chart-3" class="w-6 h-6 text-blue-600"></i>
                                     <div>
@@ -258,7 +258,7 @@
                                     <i data-lucide="file-text" class="w-6 h-6 text-orange-600"></i>
                                     <div>
                                         <h3 class="font-medium text-gray-800">Manager Reports</h3>
-                                        <p class="text-sm text-gray-600" x-text="pendingReportsCount + ' pending review'"></p>
+                                        <p class="text-sm text-gray-600" x-text="pendingReportsCount + ' pending'"></p>
                                     </div>
                                 </div>
                             </button>
